@@ -969,9 +969,331 @@
 
 // ________________________________________________
 
-  function fearNotLetter(str) {
+  // function fearNotLetter(str) {
+  //   const alphabet = "abcdefghijklmnopqrstuvwxyz".split('')
+  //   const idx = alphabet.indexOf(str[0])
+  //   const splitedStr = str.split('')
+  //   for (let i = idx, j = 0; i < idx + splitedStr.length; i++, j++) {
+  //     if (alphabet[i] !== splitedStr[j]) {
+  //       return alphabet[i]
+  //     }
+  //   }
+  //   return
+  // }
+  
+  // console.log(fearNotLetter("abcdefghijklmnopqrstuvwxyz"))
+
+  // ________________________________________________
+
+  // function uniteUnique(arr) {
+  //   const myArray = [...arguments].flat()
+  //  const uniqueArray = [...new Set(myArray)];
+  //   return uniqueArray;
+  // }
+  
+  // console.log(uniteUnique([1, 3, 2], [5, 2, 1, 4], [2, 1]))
+
+  // ________________________________________________
+
+  // function convertHTML(str) {
+  //   return str.split('').map(symb => {
+  //     switch (symb) {
+  //       case '&':
+  //         return symb = '&amp;'
+  //       case '<':
+  //         return symb = '&lt;'
+  //       case '>':
+  //         return symb = '&gt;'
+  //       case '"':
+  //         return symb = '&quot;'
+  //       case "'":
+  //         return symb = '&apos;'
+  //       default: 
+  //       return symb
+  //     }
+  //   }
+  //  ).join('')
+  // }
+  
+  // console.log(convertHTML("Schindler's List"))
+
+  // ________________________________________________
+
+  // function sumFibs(num) {
+  //   const fibArr = [0, 1]
+  //   while (fibArr[fibArr.length - 1] < num) {
+  //     fibArr.push(fibArr[fibArr.length - 1] + fibArr[fibArr.length - 2])
+  //   }
+  //   const sumFib = fibArr.reduce((acc, numb) => 
+  //     numb%2 !== 0 && numb <= num ? acc += numb : acc
+  //   )
+     
+  //   return sumFib;
+  // }
+  
+  // console.log(sumFibs(4000000))
+
+// ________________________________________________
+
+// function smallestCommons(arr) {
+//   // Setup
+//   const [min, max] = arr.sort((a, b) => a - b);
+//   const range = Array(max - min + 1)
+//     .fill(0)
+//     .map((_, i) => i + min);
+//   // Largest possible value for SCM
+//   const upperBound = range.reduce((prod, curr) => prod * curr);
+//   // Test all multiples of 'max'
+//   for (let multiple = max; multiple <= upperBound; multiple += max) {
+//     // Check if every value in range divides 'multiple'
+//     const divisible = range.every((value) => multiple % value === 0);
+//     if (divisible) {
+//       return multiple;
+//     }
+//   }
+// }
+  
+//   console.log(smallestCommons([2, 10]))
+
+// ________________________________________________
+
+  // function dropElements(arr, func) {
+  //  const idx =  arr.findIndex(numb => func(numb))
+  //  return !~idx ? [] : arr.slice(idx)
+  // }
+  
+  // console.log(dropElements([1, 2, 3, 4], function(n) {return n > 5;}))
+
+// ________________________________________________
+
+  // function steamrollArray(arr) {
+  //   return arr.flat(Infinity);
+  // }
+  
+  // console.log(steamrollArray([1, [2], [3, [[4]]]]))
+
+  // ________________________________________________
+
+  // function steamrollArray(arr) {
+  //   const flatArr = []
+  //   for (let i = 0; i < arr.length; i++) {
+  //     if (Array.isArray(arr[i])) {
+  //       flatArr.push(...steamrollArray(arr[i]))
+  //     } else {
+  //       flatArr.push(arr[i])
+  //     }
+  //   }
+  //   return flatArr;
+  // }
+  
+  // console.log(steamrollArray([[["a"]], [["b"]]]))
+
+// ________________________________________________
+
+  // function binaryAgent(str) {
+  //   const binaryArray = str.split(" ");
+  //   const textArray = [];
+  //   for (let i = 0; i < binaryArray.length; i++) {
+  //     const decimalValue = parseInt(binaryArray[i], 2);
+  //     textArray.push(String.fromCharCode(decimalValue));
+  //   }
+  //   return textArray.join("");
+  // }
+
+  // console.log(binaryAgent("01000001 01110010 01100101 01101110 00100111 01110100 00100000 01100010 01101111 01101110 01100110 01101001 01110010 01100101 01110011 00100000 01100110 01110101 01101110 00100001 00111111"))
+
+  // ________________________________________________
+
+  // function truthCheck(collection, pre) {
+  //   const chekedPre = collection.every(obj => obj[pre])
+  //   return chekedPre;
+  // }
+  
+  // console.log(truthCheck([{name: "Quincy", role: "Founder", isBot: false}, {name: "Naomi", role: "", isBot: false}, {name: "Camperbot", role: "Bot", isBot: true}], "name"))
+
+  // ________________________________________________
+
+  // function addTogether() {
+  //   const [first, second] = arguments;
+  
+  //   if (typeof (first) === "number") {
+  //     if (typeof (second) === "number") return first + second;
+  //     if (arguments.length === 1) return (second) => addTogether(first, second);
+  //   }
+  // }
+  
+  // console.log(addTogether(5)(7))
+
+  // ________________________________________________
+
+
+  // const Person = function(firstAndLast) {
+  //   let fullName = firstAndLast;
+  
+  //   this.getFirstName = function() {
+  //     return fullName.split(" ")[0];
+  //   };
+  
+  //   this.getLastName = function() {
+  //     return fullName.split(" ")[1];
+  //   };
+  
+  //   this.getFullName = function() {
+  //     return fullName;
+  //   };
+  
+  //   this.setFirstName = function(first) {
+  //     fullName = first + " " + fullName.split(" ")[1];
+  //   };
+  
+  //   this.setLastName = function(last) {
+  //     fullName = fullName.split(" ")[0] + " " + last;
+  //   };
+  
+  //   this.setFullName = function(firstAndLast) {
+  //     fullName = firstAndLast;
+  //   };
+  // };
+  
+  // const bob = new Person('Bob Ross');
+  // console.log(bob.getLastName())
+
+  // ________________________________________________
+
+  // function orbitalPeriod(arr) {
+  //   const GM = 398600.4418;
+  //   const earthRadius = 6367.4447;
+  //   const a = 2 * Math.PI;
+  //   const newArr = [];
+  
+  //   const getOrbPeriod = function(obj) {
+  //     const c = Math.pow(earthRadius + obj.avgAlt, 3);
+  //     const b = Math.sqrt(c / GM);
+  //     const orbPeriod = Math.round(a * b)
+  //     return {name: obj.name, orbitalPeriod: orbPeriod};
+  //   };
+  
+  //   for (let elem in arr) {
+  //     newArr.push(getOrbPeriod(arr[elem]));
+  //   }
+  
+  //   return newArr;
+  // }
+  
+  // console.log(orbitalPeriod([{ name: "sputnik", avgAlt: 35873.5553 }]))
+
+  // ________________________________________________
+
+  // function palindrome(str) {
+  //   const RegExp = /[\W_]/gi
+  //   const newStr = str.replace(RegExp, '').toLowerCase()
+  //   const reversedStr = newStr.split('').reverse().join('')
+  //   return reversedStr === newStr ? true : false
+  // }
+  
+  // console.log(palindrome("0_0 (: /-\ :) 0-0"))
+
+  // ________________________________________________
+
+//  const arabNumb = {
+//   1000: 'M',
+//   900: "CM",
+//   500: 'D',
+//   400: 'CD',
+//   100: 'С',	
+//   90: 'XC',	
+//   50: 'L',	
+//   40: 'XL',	
+//   10: 'X',	
+//   9: 'IX',	
+//   5: 'V',	
+//   4: 'IV',	
+//   1: 'I',
+//  }
+
+//   function convertToRoman(num) {
+//    const splitedNum = num.toString().split('')
+//    const arabNumbArr = []
+//    let multiple = 1
+//    for (let i = splitedNum.length-1; i >= 0; i--) {
+//      arabNumbArr.unshift((splitedNum[i] *= multiple).toString())
+//      multiple *= 10
+//    }
+//    const filteredArabNumbArr = arabNumbArr.filter(el => el !== '0')
+//    const arabNumbKeys = Object.keys(arabNumb)
+//    const romNumbArr = []
+//    filteredArabNumbArr.forEach(element => {
+//     const isElemInObj = arabNumbKeys.includes(element)
+//     if (isElemInObj) {
+//       romNumbArr.push(arabNumb[element])
+//     } else if (element === '2' || '3' || '20' || '30' || '200' || '300') {
+//       switch (element) {
+//         case '2':
+//         romNumbArr.push('II')
+//         break;
+//         case '3':
+//         romNumbArr.push('III')
+//         break;
+//         case '20':
+//         romNumbArr.push('XX')
+//         break;
+//         case '30':
+//         romNumbArr.push('XXX')
+//         break;
+//         case '200':
+//         romNumbArr.push('CC')
+//         break;
+//         case '300':
+//         romNumbArr.push('CCC')
+//         break;
+//         case '6':
+//         romNumbArr.push('VI')
+//         break;
+//         case '7':
+//         romNumbArr.push('VII')
+//         break;
+//         case '8':
+//         romNumbArr.push('VIII')
+//         break;
+//         case '60':
+//         romNumbArr.push('LX')
+//         break;
+//         case '70':
+//         romNumbArr.push('LXX')
+//         break;
+//         case '80':
+//         romNumbArr.push('LXXX')
+//         break;
+//         case '600':
+//         romNumbArr.push('DC')
+//         break;
+//         case '700':
+//         romNumbArr.push('DCC')
+//         break;
+//         case '800':
+//         romNumbArr.push('DCCC')
+//         break;
+//         case '2000':
+//         romNumbArr.push('MM')
+//         break;
+//         case '3000':
+//         romNumbArr.push('MMM')
+//         break;
+//       }
+//     } 
+//    });
+//     return romNumbArr.join('');
+//    }
+   
+//    console.log(convertToRoman(59))
+
+    // ________________________________________________
+
+   function rot13(str) {
+    const alphabet = "abcdefghijklmnopqrstuvwxyz".split('')
     return str;
   }
   
-  fearNotLetter("abce");
+  rot13("SERR PBQR PNZC");
+  
  
