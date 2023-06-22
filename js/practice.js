@@ -1289,11 +1289,218 @@
 
     // ________________________________________________
 
-   function rot13(str) {
-    const alphabet = "abcdefghijklmnopqrstuvwxyz".split('')
-    return str;
+  //  function rot13(str) {
+  //   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('')
+  //   const splitedStr = str.split('')
+    
+  //   const newStr = splitedStr.reduce((acc, symb) => {
+  //     const idx = alphabet.findIndex(item => item === symb)
+  //    if (!~idx) {
+  //     return acc + symb
+  //    } 
+  //     const newIdx = idx - 13
+  //   if (newIdx >= 0){
+  //     return acc + alphabet[newIdx]
+  //   }
+  //   if (newIdx < 0){
+  //     return acc + alphabet[26 + newIdx]
+  //   }
+  //   }, '')
+
+  //   return newStr;
+  // }
+  
+  // console.log(rot13("SERR PBQR PNZC"))
+
+   // ________________________________________________
+
+  // function telephoneCheck(str) {
+  //   let testRegex = /^(?:(?:\+?1\s*(?:\s*)?)?(?:\(\s*(\d{3})\s*\)|(\d{3}))\s*(?:[-]\s*)?)+?(\d{3})\s*(?:[-]\s*)?(\d{4})$/
+
+  //   return testRegex.test(str)
+  // }
+  
+  // console.log(telephoneCheck("555-5555"))
+// ________________________________________________
+
+  // function checkCashRegister(price, cash, cid) {
+  //   const change = cash - price;
+  //   const coinsOfChange = Number('0.' + change.toString().split('.')[1]);
+  //   let amountOfCoins = 0
+  //   let amountOfBanknotes = 0
+   
+  //   for (let i = 0; i <= 3; i++) {
+  //     amountOfCoins += cid[i][1]
+  //   }
+  //   for (let i = 4; i < cid.length; i++) {
+  //     amountOfBanknotes += cid[i][1]
+  //   }
+
+  //   let amountOfCash = amountOfCoins + amountOfBanknotes
+
+  //   if (amountOfCoins < coinsOfChange || amountOfCash < change ) {
+  //     return {status: "INSUFFICIENT_FUNDS", change: []}
+  //   }
+  //   if (amountOfCash === change) {
+  //     return {status: "CLOSED", change: cid}
+  //   }
+  //   const amountOfHundred = Math.floor(change/100)
+  //   const changeWithoutHundred = change - amountOfHundred
+  //   const amountOfTwenty = Math.floor(changeWithoutHundred/20)
+
+  //   return amountOfTwenty
+  // }
+  
+  console.log(checkCashRegister(19.5, 20, [["PENNY", 0.01], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 1], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]]))
+
+  function checkCashRegister(price, cash, cid) {
+    const change = cash - price;
+
+    let amountOfCash = 0
+    for (let i = 0; i < cid.length; i++) {
+      amountOfCash += cid[i][1]
+    }
+
+    if (amountOfCash === change) {
+      return {status: "CLOSED", change: cid}
+    }
+    if (amountOfCash < change) {
+      return {status: "INSUFFICIENT_FUNDS", change: []}
+    }
+
+    const changeObj = []
+    const moneyInCashReg = {
+      "PENNY": Math.round(cid[0][1] / 0.01),
+      "NICKEL": Math.round(cid[1][1] / 0.05),
+      "DIME": Math.round(cid[2][1] / 0.1),
+      "QUARTER": Math.round(cid[3][1] / 0.25),
+      "ONE": cid[4][1],
+      "FIVE": Math.round(cid[5][1] / 5),
+      "TEN": Math.round(cid[6][1] / 10),
+      "TWENTY": Math.round(cid[7][1] / 20),
+      "ONE HUNDRED": Math.round(cid[8][1] / 100),
+    }
+
+    const hundredsNeeded = Math.floor(change/100)
+    let hundredsInChange = 0
+    if (hundredsNeeded && moneyInCashReg["ONE HUNDRED"]) {
+        if (hundredsNeeded > moneyInCashReg["ONE HUNDRED"]) {
+          hundredsInChange = moneyInCashReg["ONE HUNDRED"] * 100
+          changeObj.push(["ONE HUNDRED", hundredsInChange])
+        } else if (hundredsNeeded < moneyInCashReg["ONE HUNDRED"] || hundredsNeeded === moneyInCashReg["ONE HUNDRED"]) {
+          hundredsInChange = hundredsNeeded * 100
+          changeObj.push(["ONE HUNDRED", hundredsInChange])
+        }
+    } 
+    const changeWithoutHundred = Number((change - hundredsInChange).toFixed(2))
+
+    const twentiesNeeded = Math.floor(changeWithoutHundred/20)
+    let twentiesInChange = 0
+    if (twentiesNeeded && moneyInCashReg["TWENTY"]) {
+        if (twentiesNeeded > moneyInCashReg["TWENTY"]) {
+          twentiesInChange = moneyInCashReg["TWENTY"] * 20
+          changeObj.push(["TWENTY", twentiesInChange])
+        } else if (twentiesNeeded < moneyInCashReg["TWENTY"] || twentiesNeeded === moneyInCashReg["TWENTY"]) {
+          twentiesInChange = twentiesNeeded * 20
+          changeObj.push(["TWENTY", twentiesInChange])
+        }
+    } 
+    const changeWithoutTwenties = Number((changeWithoutHundred - twentiesInChange).toFixed(2))
+
+    const tensNeeded = Math.floor(changeWithoutTwenties/10)
+    let tensInChange = 0
+    if (tensNeeded && moneyInCashReg["TEN"]) {
+        if (tensNeeded > moneyInCashReg["TEN"]) {
+          tensInChange = moneyInCashReg["TEN"] * 10
+          changeObj.push(["TEN", tensInChange])
+        } else if (tensNeeded < moneyInCashReg["TEN"] || tensNeeded === moneyInCashReg["TEN"]) {
+          tensInChange = tensNeeded * 10
+          changeObj.push(["TEN", tensInChange])
+        }
+    } 
+    const changeWithoutTens = Number((changeWithoutTwenties - tensInChange).toFixed(2))
+
+    const fivesNeeded = Math.floor(changeWithoutTens/5)
+    let fivesInChange = 0
+    if (fivesNeeded && moneyInCashReg["FIVE"]) {
+        if (fivesNeeded > moneyInCashReg["FIVE"]) {
+          fivesInChange = moneyInCashReg["FIVE"] * 5
+          changeObj.push(["FIVE", fivesInChange])
+        } else if (fivesNeeded < moneyInCashReg["FIVE"] || fivesNeeded === moneyInCashReg["FIVE"]) {
+          fivesInChange = fivesNeeded * 5
+          changeObj.push(["FIVE", fivesInChange])
+        }
+    } 
+    const changeWithoutFives = Number((changeWithoutTens - fivesInChange).toFixed(2))
+
+    const onesNeeded = Math.floor(changeWithoutFives/1)
+    let onesInChange = 0
+    if (onesNeeded && moneyInCashReg["ONE"]) {
+        if (onesNeeded > moneyInCashReg["ONE"]) {
+          onesInChange = moneyInCashReg["ONE"] * 1
+          changeObj.push(["ONE", onesInChange])
+        } else if (onesNeeded < moneyInCashReg["ONE"] || onesNeeded === moneyInCashReg["ONE"]) {
+          onesInChange = onesNeeded * 1
+          changeObj.push(["ONE", onesInChange])
+        }
+    } 
+    const changeWithoutOnes = Number((changeWithoutFives - onesInChange).toFixed(2))
+
+    const quartersNeeded = Math.floor(changeWithoutOnes/0.25)
+    let quartersInChange = 0
+    if (quartersNeeded && moneyInCashReg["QUARTER"]) {
+        if (quartersNeeded > moneyInCashReg["QUARTER"]) {
+          quartersInChange = moneyInCashReg["QUARTER"] * 0.25
+          changeObj.push(["QUARTER", quartersInChange])
+        } else if (quartersNeeded < moneyInCashReg["QUARTER"] || quartersNeeded === moneyInCashReg["QUARTER"]) {
+          quartersInChange = quartersNeeded * 0.25
+          changeObj.push(["QUARTER", quartersInChange])
+        }
+    } 
+    const changeWithoutQuarters = Number((changeWithoutOnes - quartersInChange).toFixed(2))
+
+    const dimesNeeded = Math.floor(changeWithoutQuarters/0.1)
+    let dimesInChange = 0
+    if (dimesNeeded && moneyInCashReg["DIME"]) {
+        if (dimesNeeded > moneyInCashReg["DIME"]) {
+          dimesInChange = moneyInCashReg["DIME"] * 0.1
+          changeObj.push(["DIME", dimesInChange])
+        } else if (dimesNeeded < moneyInCashReg["DIME"] || dimesNeeded === moneyInCashReg["DIME"]) {
+          dimesInChange = dimesNeeded * 0.1
+          changeObj.push(["DIME", dimesInChange])
+        }
+    } 
+    const changeWithoutDimes = Number((changeWithoutQuarters - dimesInChange).toFixed(2))
+
+    const nickelsNeeded = Math.floor(changeWithoutDimes/0.05)
+    let nickelsInChange = 0
+    if (nickelsNeeded && moneyInCashReg["NICKEL"]) {
+        if (nickelsNeeded > moneyInCashReg["NICKEL"]) {
+          nickelsInChange = moneyInCashReg["NICKEL"] * 0.05
+          changeObj.push(["NICKEL", nickelsInChange])
+        } else if (nickelsNeeded < moneyInCashReg["NICKEL"] || nickelsNeeded === moneyInCashReg["NICKEL"]) {
+          nickelsInChange = nickelsNeeded * 0.05
+          changeObj.push(["NICKEL", nickelsInChange])
+        }
+    } 
+    const changeWithoutNickels = Number((changeWithoutDimes - nickelsInChange).toFixed(2))
+
+    const penniesNeeded = Math.floor(changeWithoutNickels/0.01)
+    let penniesInChange = 0
+    if (penniesNeeded && moneyInCashReg["PENNY"]) {
+        if (penniesNeeded > moneyInCashReg["PENNY"]) {
+          penniesInChange = moneyInCashReg["PENNY"] * 0.01
+          changeObj.push(["PENNY", penniesInChange])
+        } else if (penniesNeeded < moneyInCashReg["PENNY"] || penniesNeeded === moneyInCashReg["PENNY"]) {
+          penniesInChange = penniesNeeded * 0.01
+          changeObj.push(["PENNY", penniesInChange])
+        }
+    } 
+    const changeWithoutPennies = Number((changeWithoutNickels - penniesInChange).toFixed(2))
+    
+    if (!Object.keys(changeObj).length || changeWithoutPennies) {
+        return {status: "INSUFFICIENT_FUNDS", change: []}
+      }
+
+      return {status: "OPEN", change: changeObj}
   }
-  
-  rot13("SERR PBQR PNZC");
-  
- 
